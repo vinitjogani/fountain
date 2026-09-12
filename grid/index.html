@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fountain handwriting sheet</title>
+<style>
+  @font-face {
+    font-family: "Vinit Hand Natural";
+    src: url("../fonts/VinitHandNatural-Regular.woff2") format("woff2"),
+         url("../fonts/VinitHandNatural-Regular.ttf") format("truetype");
+    font-display: swap;
+  }
+  :root {
+    --page-w: 215.9mm; --page-h: 279.4mm; --margin: 12mm;
+    --print: #8ccfcb; --label: #6fb9b4; --ink: #143f4a; --soft: #5b8b90;
+    --sans: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  html[data-size="a4"] { --page-w: 210mm; --page-h: 297mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #e6f2f4; color: var(--ink); font-family: var(--sans); }
+  .toolbar { position: sticky; top: 0; z-index: 2; display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    padding: 10px 16px; background: #fff; border-bottom: 1px solid #cfe3e5; font-size: 14px; }
+  .toolbar a, .toolbar button { font: inherit; color: var(--ink); background: #e1f3f1; border: 1px solid #a9d8d4;
+    border-radius: 999px; padding: 6px 14px; text-decoration: none; cursor: pointer; }
+  .toolbar .brand { font-family: "Vinit Hand Natural", cursive; font-size: 22px; margin-right: auto; }
+  .sheet { padding: 24px 0; display: flex; flex-direction: column; gap: 24px; align-items: center; }
+  .page { position: relative; width: var(--page-w); height: var(--page-h); padding: var(--margin);
+    background: #fff; box-shadow: 0 10px 30px rgba(20, 63, 74, .12); display: flex; flex-direction: column;
+    break-after: page; page-break-after: always; overflow: hidden; }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  .fid { position: absolute; width: 6mm; height: 6mm; border-radius: 50%; background: #000; }
+  .fid::after { content: ""; position: absolute; inset: 2mm; border-radius: 50%; background: #fff; }
+  .fid.tl { top: calc(var(--margin) - 3mm); left: calc(var(--margin) - 3mm); }
+  .fid.tr { top: calc(var(--margin) - 3mm); right: calc(var(--margin) - 3mm); }
+  .fid.bl { bottom: calc(var(--margin) - 3mm); left: calc(var(--margin) - 3mm); }
+  .fid.br { bottom: calc(var(--margin) - 3mm); right: calc(var(--margin) - 3mm); }
+  header { display: flex; align-items: baseline; gap: 4mm; margin: 2mm 0 2mm; padding: 0 5mm; color: var(--label); }
+  header .wordmark { font-family: "Vinit Hand Natural", cursive; font-size: 9mm; color: var(--print); line-height: 1; }
+  header .meta { font-size: 3.2mm; letter-spacing: .02em; }
+  header .meta b { font-weight: 600; }
+  .instructions { font-size: 3.1mm; color: var(--label); margin: 0 0 3mm; line-height: 1.4; }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 1fr; gap: 0;
+    border: .4mm solid var(--print); flex: 1; }
+  .grid.fixed { flex: 0 0 auto; grid-auto-rows: 25mm; }
+  .cell { position: relative; border: .25mm solid var(--print); }
+  .cell .label { position: absolute; top: 1mm; left: 1.4mm; font-size: 3.6mm; line-height: 1; color: var(--label);
+    font-family: var(--sans); font-weight: 600; }
+  .cell .g { position: absolute; left: 0; right: 0; border-top: .25mm solid var(--print); }
+  .cell .g.cap { top: 20%; border-top-style: dotted; }
+  .cell .g.x { top: 46%; border-top-style: dashed; }
+  .cell .g.base { top: 76%; border-top-width: .35mm; }
+  .cell.empty { background: repeating-linear-gradient(45deg, transparent 0 2mm, rgba(140,207,203,.18) 2mm 2.4mm); }
+  .sentence { margin-top: 7mm; flex: 1; display: flex; flex-direction: column; }
+  .sentence .lines { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; }
+  .sentence .prompt { font-family: "Vinit Hand Natural", cursive; font-size: 6.5mm; color: var(--print); margin: 0 0 1mm; }
+  .sentence .hint { font-size: 3mm; color: var(--label); margin: 0 0 3mm; }
+  .line { position: relative; height: 18mm; border-bottom: .35mm solid var(--print); }
+  .line::before { content: ""; position: absolute; left: 0; right: 0; top: 60%; border-top: .25mm dashed var(--print); }
+  footer { margin-top: auto; padding: 3mm 5mm 0; display: flex; justify-content: space-between; font-size: 2.9mm; color: var(--label); }
+  @media print {
+    html, body { background: #fff; }
+    .toolbar { display: none; }
+    .sheet { padding: 0; gap: 0; display: block; }
+    .page { box-shadow: none; margin: 0; }
+  }
+  @page { margin: 0; }
+</style>
+<script src="layout.js"></script>
+</head>
+<body>
+  <div class="toolbar">
+    <span class="brand">Fountain handwriting sheet</span>
+    <button type="button" data-size="letter">US Letter</button>
+    <button type="button" data-size="a4">A4</button>
+    <button type="button" onclick="window.print()">Print</button>
+    <a href="../">Back to Fountain</a>
+  </div>
+  <div class="sheet" id="sheet"></div>
+<script>
+(function () {
+  var L = window.FountainLayout;
+  var params = new URLSearchParams(location.search);
+  var size = params.get("size") === "a4" ? "a4" : "letter";
+  document.documentElement.setAttribute("data-size", size);
+  var pageStyle = document.createElement("style");
+  pageStyle.textContent = "@page { size: " + (size === "a4" ? "A4" : "letter") + "; margin: 0; }";
+  document.head.appendChild(pageStyle);
+  document.querySelectorAll(".toolbar [data-size]").forEach(function (b) {
+    b.addEventListener("click", function () { location.search = "?size=" + b.getAttribute("data-size"); });
+    if (b.getAttribute("data-size") === size) b.style.background = "#8ccfcb";
+  });
+
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  var sheet = document.getElementById("sheet");
+  L.pages.forEach(function (p, pi) {
+    var page = document.createElement("section");
+    page.className = "page";
+    var h = "";
+    h += '<i class="fid tl"></i><i class="fid tr"></i><i class="fid bl"></i><i class="fid br"></i>';
+    h += '<header><span class="wordmark">Fountain</span><span class="meta"><b>' + esc(p.title) + '</b> · sheet ' + (pi + 1) + ' of ' + L.pages.length + ' · print at 100 percent, no scaling</span></header>';
+    h += '<p class="instructions">Write one character in each box with a dark pen or a soft pencil. Letters sit on the solid line. Small letters reach the dashed line, tall letters and capitals reach the dotted line, and tails hang below. Write the way you naturally write, and leave the printed marks alone.</p>';
+    h += '<div class="grid' + (p.sentenceArea ? ' fixed' : '') + '">';
+    var total = p.rows.length * L.columns;
+    var seq = p.rows.join("");
+    for (var i = 0; i < total; i++) {
+      var ch = seq[i];
+      if (ch === undefined) { h += '<div class="cell empty"></div>'; continue; }
+      h += '<div class="cell"><span class="label">' + esc(ch) + '</span><i class="g cap"></i><i class="g x"></i><i class="g base"></i></div>';
+    }
+    h += '</div>';
+    if (p.sentenceArea) {
+      h += '<div class="sentence"><p class="prompt">' + esc(p.sentenceArea.prompt) + '</p>';
+      h += '<p class="hint">Anything at all. This helps your agent learn how your letters like to sit next to each other.</p>';
+      h += '<div class="lines">'; for (var j = 0; j < p.sentenceArea.lines; j++) h += '<div class="line"></div>'; h += '</div>';
+      h += '</div>';
+    }
+    h += '<footer><span>Photograph each sheet flat, in daylight, with all four corner marks visible.</span><span>fountain · handwriting to font</span></footer>';
+    page.innerHTML = h;
+    sheet.appendChild(page);
+  });
+})();
+</script>
+</body>
+</html>

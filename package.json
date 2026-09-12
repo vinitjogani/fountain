@@ -1,0 +1,14 @@
+{
+  "name": "fountain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Turn your own handwriting into a font. A printable sheet, a skill for your AI agent, and a wholesome little landing page.",
+  "scripts": {
+    "dev": "npx --yes http-server . -p 4173 -c-1 -o",
+    "build": "node scripts/build-downloads.mjs",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}
