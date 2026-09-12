@@ -7,25 +7,56 @@
 <meta name="description" content="Print a sheet, write your letters, take a picture, and let your AI agent turn your own handwriting into a real font. Free, open and a little bit wholesome.">
 <meta property="og:title" content="Fountain · your handwriting, as a font">
 <meta property="og:description" content="A printable sheet and a skill for your AI agent. Your handwriting, kept.">
-<meta name="theme-color" content="#7fcdd0">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 6c10 14 18 24 18 34a18 18 0 0 1-36 0c0-10 8-20 18-34z' fill='%2348aeb6'/%3E%3Ccircle cx='25' cy='38' r='5' fill='%23fff' opacity='.7'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#fbf8f1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 C42 18 48 28 48 38 L32 60 L16 38 C16 28 22 18 32 4 Z' fill='%234f8fbf'/%3E%3Ccircle cx='32' cy='38' r='3.5' fill='%23fbf8f1'/%3E%3Cpath d='M32 42 V56' stroke='%23fbf8f1' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/VinitHandNatural-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- watercolor paper: a few translucent washes bleeding in from the edges -->
 <div class="bg" aria-hidden="true">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-  <div class="blob blob-4"></div>
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <filter id="wc" x="-40%" y="-40%" width="180%" height="180%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="5" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="110" xChannelSelector="R" yChannelSelector="G"/>
+        <feGaussianBlur stdDeviation="2.5"/>
+      </filter>
+      <filter id="wc-edge" x="-40%" y="-40%" width="180%" height="180%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="5" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="110" xChannelSelector="R" yChannelSelector="G"/>
+        <feGaussianBlur stdDeviation="7"/>
+      </filter>
+    </defs>
+    <g class="wash wash-1">
+      <ellipse cx="120" cy="90" rx="300" ry="190" fill="#bcdcf0" opacity=".42" filter="url(#wc)"/>
+      <ellipse cx="120" cy="90" rx="300" ry="190" fill="none" stroke="#a9cfe9" stroke-width="16" opacity=".26" filter="url(#wc-edge)"/>
+      <ellipse cx="80" cy="70" rx="150" ry="100" fill="#a9cfe9" opacity=".22" filter="url(#wc)"/>
+    </g>
+    <g class="wash wash-2">
+      <ellipse cx="1360" cy="200" rx="220" ry="160" fill="#dcd3ef" opacity=".38" filter="url(#wc)"/>
+      <ellipse cx="1360" cy="200" rx="220" ry="160" fill="none" stroke="#cbbfe6" stroke-width="14" opacity=".22" filter="url(#wc-edge)"/>
+    </g>
+    <g class="wash wash-3">
+      <ellipse cx="1300" cy="860" rx="330" ry="190" fill="#cfe6d3" opacity=".42" filter="url(#wc)"/>
+      <ellipse cx="1300" cy="860" rx="330" ry="190" fill="none" stroke="#b9dcc0" stroke-width="16" opacity=".26" filter="url(#wc-edge)"/>
+    </g>
+    <g class="wash wash-4">
+      <ellipse cx="120" cy="880" rx="240" ry="150" fill="#f9dfcd" opacity=".38" filter="url(#wc)"/>
+      <ellipse cx="120" cy="880" rx="240" ry="150" fill="none" stroke="#f3cdb5" stroke-width="12" opacity=".22" filter="url(#wc-edge)"/>
+    </g>
+    <g class="wash wash-5">
+      <ellipse cx="820" cy="560" rx="200" ry="120" fill="#f8eec6" opacity=".26" filter="url(#wc)"/>
+    </g>
+  </svg>
 </div>
 <div class="grain" aria-hidden="true"></div>
 
 <header class="topbar">
   <div class="wrap">
     <a class="wordmark" href="#top" aria-label="Fountain, home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6c10 14 18 24 18 34a18 18 0 0 1-36 0c0-10 8-20 18-34z" fill="#48aeb6"/><circle cx="25" cy="38" r="5" fill="#fff" opacity=".7"/></svg>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 C42 18 48 28 48 38 L32 60 L16 38 C16 28 22 18 32 4 Z" fill="#4f8fbf"/><circle cx="32" cy="38" r="3.5" fill="#fbf8f1"/><path d="M32 42 V56" stroke="#fbf8f1" stroke-width="2.5" stroke-linecap="round"/></svg>
       Fountain
     </a>
     <nav class="nav" aria-label="Sections">
@@ -45,7 +76,7 @@
       <div>
         <span class="eyebrow">a small, kind place for handwriting</span>
         <h1 id="hero-title">Fountain
-          <svg class="drop bob" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6c10 14 18 24 18 34a18 18 0 0 1-36 0c0-10 8-20 18-34z" fill="#48aeb6"/><circle cx="25" cy="38" r="5" fill="#fff" opacity=".7"/></svg>
+          <svg class="nib bob" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 C42 18 48 28 48 38 L32 60 L16 38 C16 28 22 18 32 4 Z" fill="#4f8fbf"/><circle cx="32" cy="38" r="3.5" fill="#fbf8f1"/><path d="M32 42 V56" stroke="#fbf8f1" stroke-width="2.5" stroke-linecap="round"/></svg>
         </h1>
         <p class="lede">Turn your own handwriting into a real font. Print a sheet, write your letters, take a picture, and let your AI agent do the fiddly part.</p>
         <div class="cta">
@@ -64,124 +95,80 @@
         </p>
       </div>
 
+      <!-- the sky scene: a nib drawing a flourish while letters and seeds drift on the breeze -->
       <div class="scene" aria-hidden="true">
-        <svg class="fountain" viewBox="40 10 560 490">
+        <svg class="sky" viewBox="0 0 600 560">
           <defs>
-            <linearGradient id="jetGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#ffffff"/>
-              <stop offset="1" stop-color="#7fcdd0"/>
-            </linearGradient>
-            <radialGradient id="waterGrad" cx=".5" cy=".35" r=".7">
-              <stop offset="0" stop-color="#9fe3e4"/>
-              <stop offset="1" stop-color="#3a9fa9"/>
-            </radialGradient>
-            <linearGradient id="stoneGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#e8f6f7"/>
-              <stop offset=".5" stop-color="#ffffff"/>
-              <stop offset="1" stop-color="#c9e9ec"/>
-            </linearGradient>
-            <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
-            <filter id="softer" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
-            <path id="j1" d="M320 262 C 300 110, 176 160, 190 372"/>
-            <path id="j2" d="M320 262 C 312 150, 246 200, 250 380"/>
-            <path id="j3" d="M320 262 C 340 110, 464 160, 450 372"/>
-            <path id="j4" d="M320 262 C 328 150, 394 200, 390 380"/>
-            <path id="j5" d="M320 262 C 321 190, 319 150, 320 120 C 321 150, 319 190, 320 262"/>
+            <filter id="wcs" x="-40%" y="-40%" width="180%" height="180%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="9" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"/>
+              <feGaussianBlur stdDeviation="1.4"/>
+            </filter>
+            <filter id="wcs-edge" x="-40%" y="-40%" width="180%" height="180%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="9" result="n"/>
+              <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"/>
+              <feGaussianBlur stdDeviation="4"/>
+            </filter>
+            <path id="flourishPath" d="M96 402 C 150 300, 214 296, 240 372 S 322 470, 372 372 S 452 232, 410 214 S 300 234, 346 300 S 522 344, 492 204 S 428 110, 470 96"/>
           </defs>
 
-          <!-- sun -->
-          <circle class="sun-glow" cx="520" cy="86" r="70" fill="#fff3c4" opacity=".8" filter="url(#soft)"/>
-          <circle cx="520" cy="86" r="40" fill="#fff7d6"/>
-
-          <!-- clouds -->
-          <g class="cloud" fill="#fff" opacity=".9" filter="url(#softer)">
-            <ellipse cx="60" cy="120" rx="60" ry="22"/><ellipse cx="90" cy="104" rx="42" ry="26"/><ellipse cx="30" cy="112" rx="34" ry="20"/>
+          <!-- washes: sky, sage, lilac, peach -->
+          <g class="cloud-wash">
+            <ellipse cx="190" cy="150" rx="180" ry="96" fill="#bcdcf0" opacity=".6" filter="url(#wcs)"/>
+            <ellipse cx="190" cy="150" rx="180" ry="96" fill="none" stroke="#a4cbe8" stroke-width="9" opacity=".4" filter="url(#wcs-edge)"/>
+            <ellipse cx="250" cy="120" rx="90" ry="60" fill="#a9cfe9" opacity=".35" filter="url(#wcs)"/>
           </g>
-          <g class="cloud cloud-2" fill="#fff" opacity=".75" filter="url(#softer)">
-            <ellipse cx="0" cy="200" rx="46" ry="16"/><ellipse cx="24" cy="188" rx="30" ry="20"/>
+          <g class="cloud-wash" style="animation-delay:-7s">
+            <ellipse cx="440" cy="440" rx="170" ry="90" fill="#cfe6d3" opacity=".6" filter="url(#wcs)"/>
+            <ellipse cx="440" cy="440" rx="170" ry="90" fill="none" stroke="#b6d9be" stroke-width="9" opacity=".4" filter="url(#wcs-edge)"/>
           </g>
-
-          <!-- sparkles -->
-          <g fill="#fff">
-            <circle class="twinkle" cx="140" cy="60" r="3" style="animation-delay:-1s"/>
-            <circle class="twinkle" cx="420" cy="40" r="2.5" style="animation-delay:-2s"/>
-            <circle class="twinkle" cx="590" cy="190" r="3" style="animation-delay:-.4s"/>
-            <circle class="twinkle" cx="80" cy="260" r="2.5" style="animation-delay:-1.6s"/>
+          <g class="cloud-wash" style="animation-delay:-12s">
+            <ellipse cx="470" cy="110" rx="90" ry="60" fill="#dcd3ef" opacity=".55" filter="url(#wcs)"/>
+            <ellipse cx="470" cy="110" rx="90" ry="60" fill="none" stroke="#cbbfe6" stroke-width="7" opacity=".4" filter="url(#wcs-edge)"/>
           </g>
+          <g class="cloud-wash" style="animation-delay:-3s">
+            <ellipse cx="130" cy="440" rx="100" ry="66" fill="#f9dfcd" opacity=".55" filter="url(#wcs)"/>
+            <ellipse cx="130" cy="440" rx="100" ry="66" fill="none" stroke="#f1cbb3" stroke-width="7" opacity=".35" filter="url(#wcs-edge)"/>
+          </g>
+          <ellipse cx="300" cy="300" rx="70" ry="44" fill="#f8eec6" opacity=".4" filter="url(#wcs)"/>
 
-          <!-- ground shadow -->
-          <ellipse cx="320" cy="470" rx="250" ry="26" fill="#2a8894" opacity=".18" filter="url(#soft)"/>
-
-          <!-- lower basin -->
-          <ellipse cx="320" cy="440" rx="215" ry="36" fill="url(#stoneGrad)" stroke="#b5e0e3" stroke-width="2"/>
-          <path d="M105 440 v20 a215 36 0 0 0 430 0 v-20" fill="#d7eef0" stroke="#b5e0e3" stroke-width="2"/>
-          <ellipse cx="320" cy="440" rx="196" ry="28" fill="url(#waterGrad)"/>
-          <ellipse cx="270" cy="432" rx="60" ry="8" fill="#fff" opacity=".35"/>
-          <!-- ripples where the jets land -->
-          <g fill="none" stroke="#fff" stroke-width="2">
-            <ellipse class="ripple" cx="190" cy="438" rx="10" ry="3.5" style="animation-delay:-.3s"/>
-            <ellipse class="ripple" cx="250" cy="444" rx="10" ry="3.5" style="animation-delay:-1.4s"/>
-            <ellipse class="ripple" cx="450" cy="438" rx="10" ry="3.5" style="animation-delay:-.9s"/>
-            <ellipse class="ripple" cx="390" cy="444" rx="10" ry="3.5" style="animation-delay:-2s"/>
+          <!-- two little birds -->
+          <g fill="none" stroke="#5d6c7b" stroke-width="2.2" stroke-linecap="round" opacity=".7">
+            <path class="bob" d="M92 70 q 9 -9 18 0 q 9 -9 18 0"/>
+            <path class="bob" style="animation-delay:-2.5s" d="M140 46 q 7 -7 14 0 q 7 -7 14 0"/>
           </g>
 
-          <!-- column and upper basin -->
-          <path d="M296 300 h48 l6 130 h-60 z" fill="url(#stoneGrad)" stroke="#b5e0e3" stroke-width="2"/>
-          <ellipse cx="320" cy="300" rx="80" ry="16" fill="url(#stoneGrad)" stroke="#b5e0e3" stroke-width="2"/>
-          <path d="M240 300 v12 a80 16 0 0 0 160 0 v-12" fill="#d7eef0" stroke="#b5e0e3" stroke-width="2"/>
-          <ellipse cx="320" cy="300" rx="66" ry="11" fill="url(#waterGrad)"/>
-          <rect x="311" y="258" width="18" height="44" rx="6" fill="url(#stoneGrad)" stroke="#b5e0e3" stroke-width="2"/>
-
-          <!-- overflow from upper basin -->
-          <g stroke="#9fe3e4" stroke-width="3" stroke-linecap="round" opacity=".7">
-            <path class="jet" d="M256 306 C 252 350, 248 400, 246 430"/>
-            <path class="jet" d="M384 306 C 388 350, 392 400, 394 430" style="animation-delay:-.5s"/>
+          <!-- paper plane -->
+          <g class="bob" style="animation-delay:-1s" transform="translate(500 60) rotate(-18)">
+            <path d="M0 0 L-46 14 L-30 22 Z" fill="#fff" stroke="#5d6c7b" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M0 0 L-30 22 L-26 38 Z" fill="#eaf2fa" stroke="#5d6c7b" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M-96 30 q 20 -10 40 -4" fill="none" stroke="#a4cbe8" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round"/>
           </g>
 
-          <!-- water jets -->
-          <g fill="none" stroke="url(#jetGrad)" stroke-width="6" stroke-linecap="round" opacity=".85">
-            <use href="#j1" class="jet"/>
-            <use href="#j2" class="jet" style="animation-delay:-.4s"/>
-            <use href="#j3" class="jet" style="animation-delay:-.7s"/>
-            <use href="#j4" class="jet" style="animation-delay:-.2s"/>
-            <use href="#j5" class="jet" stroke-width="5" style="animation-delay:-.9s"/>
+          <!-- dandelion seeds -->
+          <g fill="none" stroke="#5d6c7b" stroke-width="1.6" stroke-linecap="round" opacity=".75">
+            <g class="seed" style="--d:15s;--dl:-2s" transform="translate(60 300)"><path d="M0 0 v16"/><path d="M0 0 l-6 -7 M0 0 l6 -7 M0 0 l-8 -1 M0 0 l8 -1 M0 0 v-9"/></g>
+            <g class="seed" style="--d:18s;--dl:-9s" transform="translate(120 360)"><path d="M0 0 v14"/><path d="M0 0 l-5 -6 M0 0 l5 -6 M0 0 l-7 -1 M0 0 l7 -1 M0 0 v-8"/></g>
+            <g class="seed" style="--d:13s;--dl:-5s" transform="translate(40 420)"><path d="M0 0 v12"/><path d="M0 0 l-5 -6 M0 0 l5 -6 M0 0 l-7 -1 M0 0 l7 -1 M0 0 v-8"/></g>
+            <g class="seed" style="--d:20s;--dl:-13s" transform="translate(200 470)"><path d="M0 0 v16"/><path d="M0 0 l-6 -7 M0 0 l6 -7 M0 0 l-8 -1 M0 0 l8 -1 M0 0 v-9"/></g>
           </g>
 
-          <!-- droplets riding the jets -->
-          <g fill="#fff">
-            <circle r="4.5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="0s"><mpath href="#j1"/></animateMotion></circle>
-            <circle r="3.5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="-0.8s"><mpath href="#j1"/></animateMotion></circle>
-            <circle r="3"><animateMotion dur="2.2s" repeatCount="indefinite" begin="-1.5s"><mpath href="#j1"/></animateMotion></circle>
-            <circle r="4"><animateMotion dur="1.9s" repeatCount="indefinite" begin="-0.3s"><mpath href="#j2"/></animateMotion></circle>
-            <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="-1.2s"><mpath href="#j2"/></animateMotion></circle>
-            <circle r="4.5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="-0.5s"><mpath href="#j3"/></animateMotion></circle>
-            <circle r="3.5"><animateMotion dur="2.2s" repeatCount="indefinite" begin="-1.3s"><mpath href="#j3"/></animateMotion></circle>
-            <circle r="3"><animateMotion dur="2.2s" repeatCount="indefinite" begin="-1.9s"><mpath href="#j3"/></animateMotion></circle>
-            <circle r="4"><animateMotion dur="1.9s" repeatCount="indefinite" begin="-0.9s"><mpath href="#j4"/></animateMotion></circle>
-            <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="-1.6s"><mpath href="#j4"/></animateMotion></circle>
-            <circle r="4"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0s"><mpath href="#j5"/></animateMotion></circle>
-            <circle r="3"><animateMotion dur="1.6s" repeatCount="indefinite" begin="-0.8s"><mpath href="#j5"/></animateMotion></circle>
-          </g>
-
-          <!-- little lily pad and a fish -->
-          <g class="bob" style="animation-delay:-2s">
-            <ellipse cx="470" cy="448" rx="22" ry="9" fill="#5fbf9c"/>
-            <path d="M470 448 l22 -4 l-2 8 z" fill="#d7eef0"/>
-          </g>
-          <g class="bob" style="animation-delay:-1s">
-            <path d="M160 452 c 12 -8, 24 -8, 34 0 c -10 8, -22 8, -34 0 z" fill="#ffd8a8"/>
-            <path d="M194 452 l 10 -6 v12 z" fill="#ffd8a8"/>
-            <circle cx="168" cy="450" r="1.6" fill="#1c5f6b"/>
+          <!-- the flourish being drawn, and the pen drawing it -->
+          <use href="#flourishPath" class="flourish" fill="none" stroke="#4f8fbf" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+          <g class="nib-hand">
+            <g transform="rotate(-42) scale(.85)">
+              <rect x="-150" y="-8" width="112" height="16" rx="8" fill="#2b3a4a"/>
+              <rect x="-50" y="-7" width="14" height="14" rx="3" fill="#c9a86a"/>
+              <path d="M0 0 L-16 -8 L-38 -6 L-38 6 L-16 8 Z" fill="#e8d9b5" stroke="#b8975a" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M0 0 L-22 0" stroke="#b8975a" stroke-width="1"/>
+            </g>
+            <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" keyPoints="0;1;1" keyTimes="0;0.55;1" calcMode="linear">
+              <mpath href="#flourishPath"/>
+            </animateMotion>
           </g>
         </svg>
         <div class="letters" id="letters"></div>
       </div>
-    </div>
-
-    <div class="waves" aria-hidden="true">
-      <div class="wave wave-3"><svg viewBox="0 0 2880 140" preserveAspectRatio="none"><path d="M0 70 C 240 20, 480 20, 720 70 S 1200 120, 1440 70 S 1920 20, 2160 70 S 2640 120, 2880 70 V140 H0 Z" fill="#a9e2e6"/></svg></div>
-      <div class="wave wave-2"><svg viewBox="0 0 2880 140" preserveAspectRatio="none"><path d="M0 80 C 240 40, 480 40, 720 80 S 1200 120, 1440 80 S 1920 40, 2160 80 S 2640 120, 2880 80 V140 H0 Z" fill="#7fcdd0"/></svg></div>
-      <div class="wave wave-1"><svg viewBox="0 0 2880 140" preserveAspectRatio="none"><path d="M0 95 C 240 60, 480 60, 720 95 S 1200 130, 1440 95 S 1920 60, 2160 95 S 2640 130, 2880 95 V140 H0 Z" fill="#48aeb6"/></svg></div>
     </div>
   </section>
 
@@ -192,23 +179,23 @@
       <h2 id="why-title" class="title reveal">No two hands are <span class="wavy">alike.</span></h2>
       <p class="lede reveal">Fonts are usually made by experts, for everyone. This one is made by you, for you. It carries the small, lovely things about the way you write.</p>
       <div class="cards">
-        <article class="card reveal">
+        <article class="card reveal" style="--spot: var(--wash-blue)">
           <div class="doodle">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 44 c8 -20, 16 -20, 20 -6 c3 10, 8 10, 14 -4"/><path d="M10 52 h44"/><circle cx="46" cy="16" r="4" fill="#ffd8a8" stroke="none"/></svg>
+            <svg viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 44 c8 -20, 16 -20, 20 -6 c3 10, 8 10, 14 -4"/><path d="M10 52 h44"/><circle cx="46" cy="16" r="4" fill="#f9dfcd" stroke="none"/></svg>
           </div>
           <h3>Personality</h3>
           <p>The way you cross a t or loop a g says something about you before a single word is read. A font made from your hand keeps all of it.</p>
         </article>
-        <article class="card reveal">
+        <article class="card reveal" style="--spot: var(--wash-lilac)">
           <div class="doodle">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 10 c-8 12, -14 20, -14 30 a14 14 0 0 0 28 0 c0 -10, -6 -18, -14 -30z"/><circle cx="26" cy="42" r="3" fill="#bff0dc" stroke="none"/><path d="M50 12 l3 3 M8 20 l3 3 M52 34 l3 3"/></svg>
+            <svg viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 12 c-18 2, -30 14, -34 34 c14 -2, 28 -12, 34 -34z" fill="#dcd3ef"/><path d="M16 46 c6 -14, 16 -24, 30 -30"/><path d="M12 54 l6 -8"/></svg>
           </div>
           <h3>Uniqueness</h3>
           <p>There are billions of people, and not one of them writes an a the way you do. That is a small miracle, and it deserves to be kept.</p>
         </article>
-        <article class="card reveal">
+        <article class="card reveal" style="--spot: var(--wash-peach)">
           <div class="doodle">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 50 l6 -22 l24 -14 l6 6 l-14 24 z"/><path d="M20 28 l16 16"/><path d="M40 12 c8 -4, 14 0, 12 8"/></svg>
+            <svg viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="20" width="44" height="30" rx="5" fill="#fff"/><path d="M10 24 l22 16 l22 -16"/><path d="M20 12 c8 4, 16 4, 24 0"/></svg>
           </div>
           <h3>The handwritten word</h3>
           <p>Typed words are fast. Handwritten words are warm. Now a birthday card, a recipe or a note on the fridge can be both.</p>
@@ -226,28 +213,28 @@
       <div class="steps">
         <article class="step reveal">
           <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="30" width="52" height="26" rx="6" fill="#e6f6f7"/><path d="M24 30 v-14 h32 v14"/><path d="M24 56 v12 h32 v-12"/><path d="M30 62 h20 M30 67 h14"/><circle cx="58" cy="42" r="2.5" fill="#3aa88f" stroke="none"/></svg>
+            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="30" width="52" height="26" rx="6" fill="#eaf2fa"/><path d="M24 30 v-14 h32 v14"/><path d="M24 56 v12 h32 v-12"/><path d="M30 62 h20 M30 67 h14"/><circle cx="58" cy="42" r="2.5" fill="#7fb59c" stroke="none"/></svg>
           </div>
           <h3>Print</h3>
           <p>Download the Fountain sheet and print it at full size. Any home printer and any plain paper will do.</p>
         </article>
         <article class="step reveal">
           <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 62 l8 -26 l30 -22 l8 8 l-22 30 z" fill="#e6f6f7"/><path d="M26 36 l18 18"/><path d="M12 68 c10 -6, 20 -6, 30 0 c6 4, 14 4, 24 -2"/></svg>
+            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 62 l8 -26 l30 -22 l8 8 l-22 30 z" fill="#eaf2fa"/><path d="M26 36 l18 18"/><path d="M12 68 c10 -6, 20 -6, 30 0 c6 4, 14 4, 24 -2"/></svg>
           </div>
           <h3>Write</h3>
           <p>Fill each box with a pen you like. Take your time, and write the way you actually write. Wobbles are welcome.</p>
         </article>
         <article class="step reveal">
           <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="26" width="56" height="38" rx="8" fill="#e6f6f7"/><path d="M30 26 l4 -8 h12 l4 8"/><circle cx="40" cy="45" r="10"/><circle cx="40" cy="45" r="4" fill="#3aa88f" stroke="none"/><circle cx="58" cy="34" r="2" fill="#3aa88f" stroke="none"/></svg>
+            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="26" width="56" height="38" rx="8" fill="#eaf2fa"/><path d="M30 26 l4 -8 h12 l4 8"/><circle cx="40" cy="45" r="10"/><circle cx="40" cy="45" r="4" fill="#7fb59c" stroke="none"/><circle cx="58" cy="34" r="2" fill="#7fb59c" stroke="none"/></svg>
           </div>
           <h3>Snap</h3>
           <p>Photograph both sheets flat on a table in daylight, with the four corner marks in view. Your phone is plenty.</p>
         </article>
         <article class="step reveal">
           <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#2a8894" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 12 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 z" fill="#fff3c4"/><path d="M18 48 c10 -8, 34 -8, 44 0"/><path d="M14 60 c14 -10, 38 -10, 52 0"/><circle cx="20" cy="22" r="2" fill="#3aa88f" stroke="none"/><circle cx="62" cy="26" r="2" fill="#3aa88f" stroke="none"/></svg>
+            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 12 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 z" fill="#f8eec6"/><path d="M18 48 c10 -8, 34 -8, 44 0"/><path d="M14 60 c14 -10, 38 -10, 52 0"/><circle cx="20" cy="22" r="2" fill="#7fb59c" stroke="none"/><circle cx="62" cy="26" r="2" fill="#7fb59c" stroke="none"/></svg>
           </div>
           <h3>Hand it over</h3>
           <p>Give the photos and the Fountain skill to your AI agent. It traces, tidies, spaces and kerns your letters, then hands you a font file.</p>
@@ -278,7 +265,7 @@
               <g fill="#6fb9b4" font-family="Arial, sans-serif" font-size="5">
                 <text x="12" y="32">A</text><text x="26" y="32">B</text><text x="41" y="32">C</text><text x="55" y="32">D</text><text x="69" y="32">E</text><text x="83" y="32">F</text><text x="98" y="32">G</text>
               </g>
-              <g fill="#143f4a" font-family="Vinit Hand Natural, cursive" font-size="9">
+              <g fill="#2b3a4a" font-family="Vinit Hand Natural, cursive" font-size="9">
                 <text x="14" y="37">A</text><text x="28" y="37">B</text><text x="43" y="37">C</text><text x="57" y="37">D</text>
               </g>
               <circle cx="6" cy="6" r="3"/><circle cx="114" cy="6" r="3"/><circle cx="6" cy="149" r="3"/><circle cx="114" cy="149" r="3"/>
@@ -344,7 +331,7 @@ I hope you still write things down by hand sometimes. Here is a font, in case yo
       <div class="paper-note reveal">
         <p>Somewhere there is a shoebox with a letter in it, and you know who wrote it before you read a word. That is what handwriting does. It is a face for words.</p>
         <p>We built Fountain so that face can come along to the places we type now: a message, a card, a recipe, a website like this one. Nothing about your writing needs fixing. It only needs keeping.</p>
-        <p>So print the sheet, make a cup of something warm, and write your letters the way you always have. The rest is just water finding its way.</p>
+        <p>So print the sheet, make a cup of something warm, and write your letters the way you always have. The rest is just ink finding its way.</p>
         <p class="sig">with love, Fountain</p>
       </div>
     </div>
@@ -353,8 +340,8 @@ I hope you still write things down by hand sometimes. Here is a font, in case yo
 </main>
 
 <footer class="site">
-  <svg class="fish" viewBox="0 0 64 40" aria-hidden="true"><path d="M8 20 c10 -14, 30 -14, 42 0 c-12 14, -32 14, -42 0 z" fill="#ffd8a8"/><path d="M50 20 l10 -8 v16 z" fill="#ffd8a8"/><circle cx="18" cy="17" r="2" fill="#1c5f6b"/></svg>
-  <p class="made">Made with love and a lot of water.</p>
+  <svg class="feather" viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M50 12 c-18 2, -30 14, -34 34 c14 -2, 28 -12, 34 -34z" fill="#dcd3ef"/><path d="M16 46 c6 -14, 16 -24, 30 -30"/><path d="M12 54 l6 -8"/></svg>
+  <p class="made">Made with love and a little ink.</p>
   <p>Fountain is free and open source. <a href="https://github.com/vinitjogani/fountain">Peek at the code</a>, or make your own sheet.</p>
   <p>This site is set in Vinit Hand Natural, a font made from one handwritten alphabet sheet.</p>
 </footer>

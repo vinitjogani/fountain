@@ -1,6 +1,6 @@
 # Fountain
 
-A small, kind place for handwriting. Print a sheet, write your letters, take a picture,
+An airy, watercolor-styled landing page for handwriting. Print a sheet, write your letters, take a picture,
 and let your AI agent turn your own handwriting into a real font.
 
 Fountain is a static landing page plus two downloadable assets:
