@@ -46,7 +46,13 @@ manifest and the skill's `references/fountain-grid.md` all follow it.
 ## Deploy
 
 `.github/workflows/pages.yml` publishes the repository root to GitHub Pages on every push to
-`main`. Enable Pages with the "GitHub Actions" source in the repository settings.
+`main`.
+
+It needs Pages switched on once by hand first, under **Settings → Pages → Build and
+deployment → Source: GitHub Actions**. Until that is done the workflow fails on its first
+step with `Get Pages site failed`. Neither the workflow token nor a personal token can
+create the site for you: that call needs repository admin rights. Once Pages is on, re-run
+the workflow (or push to `main`) and it deploys.
 
 ## Layout
 

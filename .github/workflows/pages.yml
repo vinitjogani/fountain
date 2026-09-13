@@ -23,10 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-        with:
-          # Turns Pages on with the Actions build type the first time this runs,
-          # so a fresh clone of this repo deploys without visiting settings.
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
