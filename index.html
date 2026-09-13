@@ -3,348 +3,177 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fountain · your handwriting, as a font</title>
-<meta name="description" content="Print a sheet, write your letters, take a picture, and let your AI agent turn your own handwriting into a real font. Free, open and a little bit wholesome.">
-<meta property="og:title" content="Fountain · your handwriting, as a font">
-<meta property="og:description" content="A printable sheet and a skill for your AI agent. Your handwriting, kept.">
-<meta name="theme-color" content="#fbf8f1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 C42 18 48 28 48 38 L32 60 L16 38 C16 28 22 18 32 4 Z' fill='%234f8fbf'/%3E%3Ccircle cx='32' cy='38' r='3.5' fill='%23fbf8f1'/%3E%3Cpath d='M32 42 V56' stroke='%23fbf8f1' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Fountain · turn your handwriting into a real font</title>
+<meta name="description" content="Print a sheet, write it out with any pen, and hand the photo to your AI agent. Fountain turns your own handwriting into a real font file.">
+<meta property="og:title" content="Fountain · turn your handwriting into a real font">
+<meta property="og:description" content="One sheet. One pen. Every letter you have ever written, now typeable.">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23f8f5ee'/%3E%3Cpath d='M32 8 C41 20 46 29 46 37 L32 56 L18 37 C18 29 23 20 32 8 Z' fill='%23405a7a'/%3E%3Ccircle cx='32' cy='37' r='3.2' fill='%23f8f5ee'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/VinitHandNatural-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/spectral-300-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- watercolor paper: a few translucent washes bleeding in from the edges -->
-<div class="bg" aria-hidden="true">
-  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <filter id="wc" x="-40%" y="-40%" width="180%" height="180%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="5" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="110" xChannelSelector="R" yChannelSelector="G"/>
-        <feGaussianBlur stdDeviation="2.5"/>
-      </filter>
-      <filter id="wc-edge" x="-40%" y="-40%" width="180%" height="180%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="5" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="110" xChannelSelector="R" yChannelSelector="G"/>
-        <feGaussianBlur stdDeviation="7"/>
-      </filter>
-    </defs>
-    <g class="wash wash-1">
-      <ellipse cx="120" cy="90" rx="300" ry="190" fill="#bcdcf0" opacity=".42" filter="url(#wc)"/>
-      <ellipse cx="120" cy="90" rx="300" ry="190" fill="none" stroke="#a9cfe9" stroke-width="16" opacity=".26" filter="url(#wc-edge)"/>
-      <ellipse cx="80" cy="70" rx="150" ry="100" fill="#a9cfe9" opacity=".22" filter="url(#wc)"/>
-    </g>
-    <g class="wash wash-2">
-      <ellipse cx="1360" cy="200" rx="220" ry="160" fill="#dcd3ef" opacity=".38" filter="url(#wc)"/>
-      <ellipse cx="1360" cy="200" rx="220" ry="160" fill="none" stroke="#cbbfe6" stroke-width="14" opacity=".22" filter="url(#wc-edge)"/>
-    </g>
-    <g class="wash wash-3">
-      <ellipse cx="1300" cy="860" rx="330" ry="190" fill="#cfe6d3" opacity=".42" filter="url(#wc)"/>
-      <ellipse cx="1300" cy="860" rx="330" ry="190" fill="none" stroke="#b9dcc0" stroke-width="16" opacity=".26" filter="url(#wc-edge)"/>
-    </g>
-    <g class="wash wash-4">
-      <ellipse cx="120" cy="880" rx="240" ry="150" fill="#f9dfcd" opacity=".38" filter="url(#wc)"/>
-      <ellipse cx="120" cy="880" rx="240" ry="150" fill="none" stroke="#f3cdb5" stroke-width="12" opacity=".22" filter="url(#wc-edge)"/>
-    </g>
-    <g class="wash wash-5">
-      <ellipse cx="820" cy="560" rx="200" ry="120" fill="#f8eec6" opacity=".26" filter="url(#wc)"/>
-    </g>
-  </svg>
+<div class="bleeds" aria-hidden="true">
+  <div class="bleed bleed-1"></div>
+  <div class="bleed bleed-2"></div>
+  <div class="bleed bleed-3"></div>
+  <div class="bleed bleed-4"></div>
 </div>
 <div class="grain" aria-hidden="true"></div>
 
-<header class="topbar">
+<div class="page">
   <div class="wrap">
-    <a class="wordmark" href="#top" aria-label="Fountain, home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 C42 18 48 28 48 38 L32 60 L16 38 C16 28 22 18 32 4 Z" fill="#4f8fbf"/><circle cx="32" cy="38" r="3.5" fill="#fbf8f1"/><path d="M32 42 V56" stroke="#fbf8f1" stroke-width="2.5" stroke-linecap="round"/></svg>
-      Fountain
-    </a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#why">why</a>
-      <a href="#how">how it works</a>
-      <a href="#downloads">downloads</a>
-      <a href="#try">try it</a>
-    </nav>
+
+    <header class="masthead">
+      <a class="wordmark" href="#top">Fountain</a>
+      <nav aria-label="Sections">
+        <a href="#how">How it works</a>
+        <a href="#kit">The kit</a>
+      </nav>
+    </header>
+
+    <main id="top">
+
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <h1>Turn your handwriting<br>into a <span class="hand">real font</span>.</h1>
+        <p class="lede">One sheet. One pen. Every letter you have ever written, now typeable.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="#kit">Download the kit</a>
+          <a class="btn btn-outline" href="#how">See how it works</a>
+        </div>
+      </section>
+
+      <!-- ============ SPECIMEN ============ -->
+      <section class="specimen" aria-labelledby="specimen-label">
+        <div class="specimen-head">
+          <div class="label" id="specimen-label">Specimen — made with Fountain</div>
+          <div class="specimen-hint">Click the line and type your own</div>
+        </div>
+        <div class="specimen-line" id="specimen" contenteditable="true" spellcheck="false"
+             role="textbox" aria-multiline="true" aria-labelledby="specimen-label">The quick brown fox jumps over the lazy dog — 0123456789</div>
+      </section>
+
+      <!-- ============ NOBODY WRITES LIKE YOU ============ -->
+      <section class="statement">
+        <h2 class="reveal">Nobody writes<br>like you write.</h2>
+        <p class="lede reveal">Your slant. Your pressure. The corners you started cutting years ago and never noticed.</p>
+        <div class="cols reveal">
+          <div class="col">
+            <div class="figure tint-blue">a a a</div>
+            <p>Multiple takes on every letter, so no two words repeat exactly.</p>
+          </div>
+          <div class="col">
+            <div class="figure tint-amber">drift</div>
+            <p>Baselines that rise and fall the way a real line of writing does.</p>
+          </div>
+          <div class="col">
+            <div class="figure tint-green">weight</div>
+            <p>The pen you actually use, pressure and all, kept intact.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ HOW ============ -->
+      <section class="steps" id="how">
+        <div class="col reveal">
+          <div class="figure lg tint-blue">01</div>
+          <h3>Print the sheet</h3>
+          <p>Two pages, letter or A4. Every letter, number and mark you need, in labelled boxes.</p>
+        </div>
+        <div class="col reveal">
+          <div class="figure lg tint-amber">02</div>
+          <h3>Write it out</h3>
+          <p>Any pen you like. Write the way you normally write, then photograph or scan the pages.</p>
+        </div>
+        <div class="col reveal">
+          <div class="figure lg tint-green">03</div>
+          <h3>Hand it to your agent</h3>
+          <p>Give it the photos and the Fountain skill. It returns a real font file, spaced and kerned.</p>
+        </div>
+      </section>
+
+      <!-- ============ PEOPLE KEEP THE NOTES ============ -->
+      <section class="notes rule-top">
+        <div class="heading">
+          <h2 class="reveal">People keep the notes<br>that were written.</h2>
+          <p class="lede reveal">Pinned up. Tucked into books. Found again years later. Not for what they said, but for whose hand said it.</p>
+        </div>
+        <div class="cols wide reveal">
+          <div class="col">
+            <div class="figure sm tint-blue">Thank you</div>
+            <p>Sent as an email. Still unmistakably from you.</p>
+          </div>
+          <div class="col">
+            <div class="figure sm tint-amber">For Maya, 2026</div>
+            <p>Dedications and letters, the long things worth keeping.</p>
+          </div>
+          <div class="col">
+            <div class="figure sm tint-green">signed</div>
+            <p>Margins, labels, signatures. Made, not issued.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CLOSING ============ -->
+      <section class="closing rule-top">
+        <h2 class="reveal">Print it. Write it.<br>Keep it forever.</h2>
+        <p class="lede reveal">Ten minutes at a kitchen table, and your handwriting outlives the paper.</p>
+        <a class="btn btn-solid reveal" href="#kit">Download the kit</a>
+      </section>
+
+      <!-- ============ KIT ============ -->
+      <section class="kit" id="kit">
+        <article class="card reveal">
+          <div class="label">Included — 1 of 2</div>
+          <h2>The printable sheet</h2>
+          <p>Two pages of guided boxes, with corner marks so your agent can straighten the photo. Fill them in, photograph them, you're done.</p>
+          <div class="inset">
+            <div class="sheet-grid" id="sheet-grid" aria-hidden="true"></div>
+          </div>
+          <div class="links">
+            <a class="btn btn-outline btn-mono" href="downloads/fountain-grid-letter.pdf" download>Download sheet (Letter)</a>
+            <a class="btn btn-outline btn-mono" href="downloads/fountain-grid-a4.pdf" download>Download sheet (A4)</a>
+          </div>
+          <p class="specimen-hint">Or <a href="grid/">open it in the browser</a>, and print from there.</p>
+        </article>
+
+        <article class="card reveal">
+          <div class="label">Included — 2 of 2</div>
+          <h2>The Fountain skill</h2>
+          <p>Instructions your agent follows to cut your letters out, vectorise them, normalise the page's distortions, then space, kern and compile a font.</p>
+          <div class="inset tree">
+            <div>handwriting-to-font/</div>
+            <div class="i1">SKILL.md</div>
+            <div class="i1">references/</div>
+            <div class="i2">fountain-grid.md</div>
+            <div class="i2">fountain-grid-layout.json</div>
+          </div>
+          <div class="links">
+            <a class="btn btn-outline btn-mono" href="downloads/handwriting-to-font.skill" download>Download skill (.skill)</a>
+          </div>
+          <div class="inset">
+            <pre>unzip handwriting-to-font.skill -d ~/.claude/skills/
+claude "Here are photos of my Fountain
+sheets. Make me a font."</pre>
+          </div>
+        </article>
+      </section>
+
+    </main>
+
+    <footer class="colophon">
+      <div class="wordmark">Fountain</div>
+      <div class="meta">
+        Works with any AI agent · <a href="https://github.com/vinitjogani/fountain">Source on GitHub</a><br>
+        Set in Vinit Hand Natural, a font made this way from one handwritten sheet.
+      </div>
+    </footer>
+
   </div>
-</header>
-
-<main id="top">
-
-  <!-- ============ HERO ============ -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <div>
-        <span class="eyebrow">a small, kind place for handwriting</span>
-        <h1 id="hero-title">Fountain
-          <svg class="nib bob" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 C42 18 48 28 48 38 L32 60 L16 38 C16 28 22 18 32 4 Z" fill="#4f8fbf"/><circle cx="32" cy="38" r="3.5" fill="#fbf8f1"/><path d="M32 42 V56" stroke="#fbf8f1" stroke-width="2.5" stroke-linecap="round"/></svg>
-        </h1>
-        <p class="lede">Turn your own handwriting into a real font. Print a sheet, write your letters, take a picture, and let your AI agent do the fiddly part.</p>
-        <div class="cta">
-          <a class="btn btn-primary" href="#downloads">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
-            Print the sheet
-          </a>
-          <a class="btn btn-ghost" href="downloads/handwriting-to-font.skill" download>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-            Get the skill
-          </a>
-        </div>
-        <p class="note">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-3-3-9 9v3zM14 8l3 3M3 21l3-1"/></svg>
-          Everything you're reading is set in Vinit's handwriting, made exactly this way.
-        </p>
-      </div>
-
-      <!-- the sky scene: a nib drawing a flourish while letters and seeds drift on the breeze -->
-      <div class="scene" aria-hidden="true">
-        <svg class="sky" viewBox="0 0 600 560">
-          <defs>
-            <filter id="wcs" x="-40%" y="-40%" width="180%" height="180%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="9" result="n"/>
-              <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"/>
-              <feGaussianBlur stdDeviation="1.4"/>
-            </filter>
-            <filter id="wcs-edge" x="-40%" y="-40%" width="180%" height="180%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="9" result="n"/>
-              <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"/>
-              <feGaussianBlur stdDeviation="4"/>
-            </filter>
-            <path id="flourishPath" d="M96 402 C 150 300, 214 296, 240 372 S 322 470, 372 372 S 452 232, 410 214 S 300 234, 346 300 S 522 344, 492 204 S 428 110, 470 96"/>
-          </defs>
-
-          <!-- washes: sky, sage, lilac, peach -->
-          <g class="cloud-wash">
-            <ellipse cx="190" cy="150" rx="180" ry="96" fill="#bcdcf0" opacity=".6" filter="url(#wcs)"/>
-            <ellipse cx="190" cy="150" rx="180" ry="96" fill="none" stroke="#a4cbe8" stroke-width="9" opacity=".4" filter="url(#wcs-edge)"/>
-            <ellipse cx="250" cy="120" rx="90" ry="60" fill="#a9cfe9" opacity=".35" filter="url(#wcs)"/>
-          </g>
-          <g class="cloud-wash" style="animation-delay:-7s">
-            <ellipse cx="440" cy="440" rx="170" ry="90" fill="#cfe6d3" opacity=".6" filter="url(#wcs)"/>
-            <ellipse cx="440" cy="440" rx="170" ry="90" fill="none" stroke="#b6d9be" stroke-width="9" opacity=".4" filter="url(#wcs-edge)"/>
-          </g>
-          <g class="cloud-wash" style="animation-delay:-12s">
-            <ellipse cx="470" cy="110" rx="90" ry="60" fill="#dcd3ef" opacity=".55" filter="url(#wcs)"/>
-            <ellipse cx="470" cy="110" rx="90" ry="60" fill="none" stroke="#cbbfe6" stroke-width="7" opacity=".4" filter="url(#wcs-edge)"/>
-          </g>
-          <g class="cloud-wash" style="animation-delay:-3s">
-            <ellipse cx="130" cy="440" rx="100" ry="66" fill="#f9dfcd" opacity=".55" filter="url(#wcs)"/>
-            <ellipse cx="130" cy="440" rx="100" ry="66" fill="none" stroke="#f1cbb3" stroke-width="7" opacity=".35" filter="url(#wcs-edge)"/>
-          </g>
-          <ellipse cx="300" cy="300" rx="70" ry="44" fill="#f8eec6" opacity=".4" filter="url(#wcs)"/>
-
-          <!-- two little birds -->
-          <g fill="none" stroke="#5d6c7b" stroke-width="2.2" stroke-linecap="round" opacity=".7">
-            <path class="bob" d="M92 70 q 9 -9 18 0 q 9 -9 18 0"/>
-            <path class="bob" style="animation-delay:-2.5s" d="M140 46 q 7 -7 14 0 q 7 -7 14 0"/>
-          </g>
-
-          <!-- paper plane -->
-          <g class="bob" style="animation-delay:-1s" transform="translate(500 60) rotate(-18)">
-            <path d="M0 0 L-46 14 L-30 22 Z" fill="#fff" stroke="#5d6c7b" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M0 0 L-30 22 L-26 38 Z" fill="#eaf2fa" stroke="#5d6c7b" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M-96 30 q 20 -10 40 -4" fill="none" stroke="#a4cbe8" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round"/>
-          </g>
-
-          <!-- dandelion seeds -->
-          <g fill="none" stroke="#5d6c7b" stroke-width="1.6" stroke-linecap="round" opacity=".75">
-            <g class="seed" style="--d:15s;--dl:-2s" transform="translate(60 300)"><path d="M0 0 v16"/><path d="M0 0 l-6 -7 M0 0 l6 -7 M0 0 l-8 -1 M0 0 l8 -1 M0 0 v-9"/></g>
-            <g class="seed" style="--d:18s;--dl:-9s" transform="translate(120 360)"><path d="M0 0 v14"/><path d="M0 0 l-5 -6 M0 0 l5 -6 M0 0 l-7 -1 M0 0 l7 -1 M0 0 v-8"/></g>
-            <g class="seed" style="--d:13s;--dl:-5s" transform="translate(40 420)"><path d="M0 0 v12"/><path d="M0 0 l-5 -6 M0 0 l5 -6 M0 0 l-7 -1 M0 0 l7 -1 M0 0 v-8"/></g>
-            <g class="seed" style="--d:20s;--dl:-13s" transform="translate(200 470)"><path d="M0 0 v16"/><path d="M0 0 l-6 -7 M0 0 l6 -7 M0 0 l-8 -1 M0 0 l8 -1 M0 0 v-9"/></g>
-          </g>
-
-          <!-- the flourish being drawn, and the pen drawing it -->
-          <use href="#flourishPath" class="flourish" fill="none" stroke="#4f8fbf" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
-          <g class="nib-hand">
-            <g transform="rotate(-42) scale(.85)">
-              <rect x="-150" y="-8" width="112" height="16" rx="8" fill="#2b3a4a"/>
-              <rect x="-50" y="-7" width="14" height="14" rx="3" fill="#c9a86a"/>
-              <path d="M0 0 L-16 -8 L-38 -6 L-38 6 L-16 8 Z" fill="#e8d9b5" stroke="#b8975a" stroke-width="1.2" stroke-linejoin="round"/>
-              <path d="M0 0 L-22 0" stroke="#b8975a" stroke-width="1"/>
-            </g>
-            <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" keyPoints="0;1;1" keyTimes="0;0.55;1" calcMode="linear">
-              <mpath href="#flourishPath"/>
-            </animateMotion>
-          </g>
-        </svg>
-        <div class="letters" id="letters"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ WHY ============ -->
-  <section id="why" class="center" aria-labelledby="why-title">
-    <div class="wrap">
-      <span class="eyebrow reveal">why bother</span>
-      <h2 id="why-title" class="title reveal">No two hands are <span class="wavy">alike.</span></h2>
-      <p class="lede reveal">Fonts are usually made by experts, for everyone. This one is made by you, for you. It carries the small, lovely things about the way you write.</p>
-      <div class="cards">
-        <article class="card reveal" style="--spot: var(--wash-blue)">
-          <div class="doodle">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 44 c8 -20, 16 -20, 20 -6 c3 10, 8 10, 14 -4"/><path d="M10 52 h44"/><circle cx="46" cy="16" r="4" fill="#f9dfcd" stroke="none"/></svg>
-          </div>
-          <h3>Personality</h3>
-          <p>The way you cross a t or loop a g says something about you before a single word is read. A font made from your hand keeps all of it.</p>
-        </article>
-        <article class="card reveal" style="--spot: var(--wash-lilac)">
-          <div class="doodle">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M50 12 c-18 2, -30 14, -34 34 c14 -2, 28 -12, 34 -34z" fill="#dcd3ef"/><path d="M16 46 c6 -14, 16 -24, 30 -30"/><path d="M12 54 l6 -8"/></svg>
-          </div>
-          <h3>Uniqueness</h3>
-          <p>There are billions of people, and not one of them writes an a the way you do. That is a small miracle, and it deserves to be kept.</p>
-        </article>
-        <article class="card reveal" style="--spot: var(--wash-peach)">
-          <div class="doodle">
-            <svg viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="20" width="44" height="30" rx="5" fill="#fff"/><path d="M10 24 l22 16 l22 -16"/><path d="M20 12 c8 4, 16 4, 24 0"/></svg>
-          </div>
-          <h3>The handwritten word</h3>
-          <p>Typed words are fast. Handwritten words are warm. Now a birthday card, a recipe or a note on the fridge can be both.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ HOW ============ -->
-  <section id="how" class="center" aria-labelledby="how-title">
-    <div class="wrap">
-      <span class="eyebrow reveal">how it works</span>
-      <h2 id="how-title" class="title reveal">Four gentle steps.</h2>
-      <p class="lede reveal">No design tools, no font editor, no tracing by hand. Just a pen, your phone and an agent that knows what to do.</p>
-      <div class="steps">
-        <article class="step reveal">
-          <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="30" width="52" height="26" rx="6" fill="#eaf2fa"/><path d="M24 30 v-14 h32 v14"/><path d="M24 56 v12 h32 v-12"/><path d="M30 62 h20 M30 67 h14"/><circle cx="58" cy="42" r="2.5" fill="#7fb59c" stroke="none"/></svg>
-          </div>
-          <h3>Print</h3>
-          <p>Download the Fountain sheet and print it at full size. Any home printer and any plain paper will do.</p>
-        </article>
-        <article class="step reveal">
-          <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 62 l8 -26 l30 -22 l8 8 l-22 30 z" fill="#eaf2fa"/><path d="M26 36 l18 18"/><path d="M12 68 c10 -6, 20 -6, 30 0 c6 4, 14 4, 24 -2"/></svg>
-          </div>
-          <h3>Write</h3>
-          <p>Fill each box with a pen you like. Take your time, and write the way you actually write. Wobbles are welcome.</p>
-        </article>
-        <article class="step reveal">
-          <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="26" width="56" height="38" rx="8" fill="#eaf2fa"/><path d="M30 26 l4 -8 h12 l4 8"/><circle cx="40" cy="45" r="10"/><circle cx="40" cy="45" r="4" fill="#7fb59c" stroke="none"/><circle cx="58" cy="34" r="2" fill="#7fb59c" stroke="none"/></svg>
-          </div>
-          <h3>Snap</h3>
-          <p>Photograph both sheets flat on a table in daylight, with the four corner marks in view. Your phone is plenty.</p>
-        </article>
-        <article class="step reveal">
-          <div class="doodle">
-            <svg viewBox="0 0 80 80" fill="none" stroke="#4f8fbf" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M40 12 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 z" fill="#f8eec6"/><path d="M18 48 c10 -8, 34 -8, 44 0"/><path d="M14 60 c14 -10, 38 -10, 52 0"/><circle cx="20" cy="22" r="2" fill="#7fb59c" stroke="none"/><circle cx="62" cy="26" r="2" fill="#7fb59c" stroke="none"/></svg>
-          </div>
-          <h3>Hand it over</h3>
-          <p>Give the photos and the Fountain skill to your AI agent. It traces, tidies, spaces and kerns your letters, then hands you a font file.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ DOWNLOADS ============ -->
-  <section id="downloads" aria-labelledby="dl-title">
-    <div class="wrap">
-      <div class="center">
-        <span class="eyebrow reveal">the goods</span>
-        <h2 id="dl-title" class="title reveal">Everything you need, <span class="wavy">free.</span></h2>
-        <p class="lede reveal">Two little files. One for your printer, one for your agent.</p>
-      </div>
-      <div class="downloads">
-        <article class="dl reveal">
-          <div class="sheet-peek" aria-hidden="true">
-            <svg viewBox="0 0 120 155">
-              <rect width="120" height="155" fill="#fff"/>
-              <text x="10" y="18" font-family="Vinit Hand Natural, cursive" font-size="11" fill="#8ccfcb">Fountain</text>
-              <g stroke="#8ccfcb" stroke-width=".8" fill="none">
-                <rect x="10" y="26" width="100" height="118"/>
-                <path d="M24 26v118M39 26v118M53 26v118M67 26v118M81 26v118M96 26v118"/>
-                <path d="M10 39h100M10 52h100M10 65h100M10 78h100M10 91h100M10 104h100M10 117h100M10 130h100"/>
-              </g>
-              <g fill="#6fb9b4" font-family="Arial, sans-serif" font-size="5">
-                <text x="12" y="32">A</text><text x="26" y="32">B</text><text x="41" y="32">C</text><text x="55" y="32">D</text><text x="69" y="32">E</text><text x="83" y="32">F</text><text x="98" y="32">G</text>
-              </g>
-              <g fill="#2b3a4a" font-family="Vinit Hand Natural, cursive" font-size="9">
-                <text x="14" y="37">A</text><text x="28" y="37">B</text><text x="43" y="37">C</text><text x="57" y="37">D</text>
-              </g>
-              <circle cx="6" cy="6" r="3"/><circle cx="114" cy="6" r="3"/><circle cx="6" cy="149" r="3"/><circle cx="114" cy="149" r="3"/>
-            </svg>
-          </div>
-          <h3>The Fountain sheet</h3>
-          <p>Two printable pages with a box for every letter, number and mark, plus a few ruled lines for a sentence you love. Print at full size, no scaling.</p>
-          <div class="row">
-            <a class="btn btn-primary btn-small" href="downloads/fountain-grid-letter.pdf" download>US Letter PDF</a>
-            <a class="btn btn-primary btn-small" href="downloads/fountain-grid-a4.pdf" download>A4 PDF</a>
-            <a class="btn btn-ghost btn-small" href="grid/">Open in your browser</a>
-          </div>
-          <p class="fine">Prefer to script it? The <a href="downloads/fountain-grid-layout.json" download>layout manifest</a> describes every cell so any tool can read the sheet.</p>
-        </article>
-        <article class="dl reveal">
-          <h3>The skill</h3>
-          <p>A skill file that teaches your AI agent the whole craft: finding each letter in the photo, tracing it, straightening the sheet's little distortions, then spacing, kerning and compiling a real TTF.</p>
-          <div class="row">
-            <a class="btn btn-primary btn-small" href="downloads/handwriting-to-font.skill" download>Download the skill</a>
-          </div>
-          <p class="fine">Works with Claude Code and any agent that reads skills. Unzip it into your skills folder, then just ask:</p>
-          <pre>unzip handwriting-to-font.skill -d ~/.claude/skills/
-claude "Here are photos of my Fountain sheets. Make me a font."</pre>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TRY ============ -->
-  <section id="try" aria-labelledby="try-title">
-    <div class="wrap">
-      <div class="center">
-        <span class="eyebrow reveal">a little taste</span>
-        <h2 id="try-title" class="title reveal">Write something.</h2>
-        <p class="lede reveal">This is what a finished Fountain font feels like. Vinit's hand, straight from one sheet of paper, now typing along with you.</p>
-      </div>
-      <div class="try">
-        <div class="pad reveal">
-          <label for="pen">Type here</label>
-          <textarea id="pen" spellcheck="false">Dear future me,
-
-I hope you still write things down by hand sometimes. Here is a font, in case you forget what it looked like.</textarea>
-          <div class="chips" aria-label="Suggestions">
-            <button class="chip" type="button">You are doing better than you think.</button>
-            <button class="chip" type="button">The quick brown fox jumps over the lazy dog.</button>
-            <button class="chip" type="button">Milk, eggs, bread, a small cake for no reason.</button>
-          </div>
-          <div class="controls">
-            <label for="size">Size</label>
-            <input id="size" type="range" min="18" max="56" value="30">
-          </div>
-        </div>
-        <div class="paper reveal" id="paper" aria-live="polite"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ NOTE ============ -->
-  <section class="note-section center" aria-labelledby="note-title">
-    <div class="wrap">
-      <span class="eyebrow reveal">a note, in closing</span>
-      <h2 id="note-title" class="title reveal">Keep your hand.</h2>
-      <div class="paper-note reveal">
-        <p>Somewhere there is a shoebox with a letter in it, and you know who wrote it before you read a word. That is what handwriting does. It is a face for words.</p>
-        <p>We built Fountain so that face can come along to the places we type now: a message, a card, a recipe, a website like this one. Nothing about your writing needs fixing. It only needs keeping.</p>
-        <p>So print the sheet, make a cup of something warm, and write your letters the way you always have. The rest is just ink finding its way.</p>
-        <p class="sig">with love, Fountain</p>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site">
-  <svg class="feather" viewBox="0 0 64 64" fill="none" stroke="#4f8fbf" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M50 12 c-18 2, -30 14, -34 34 c14 -2, 28 -12, 34 -34z" fill="#dcd3ef"/><path d="M16 46 c6 -14, 16 -24, 30 -30"/><path d="M12 54 l6 -8"/></svg>
-  <p class="made">Made with love and a little ink.</p>
-  <p>Fountain is free and open source. <a href="https://github.com/vinitjogani/fountain">Peek at the code</a>, or make your own sheet.</p>
-  <p>This site is set in Vinit Hand Natural, a font made from one handwritten alphabet sheet.</p>
-</footer>
+</div>
 
 <script src="main.js"></script>
 </body>

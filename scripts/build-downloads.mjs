@@ -15,8 +15,12 @@ const out = resolve(root, "downloads");
 mkdirSync(out, { recursive: true });
 
 const layout = require(resolve(root, "grid/layout.js"));
-writeFileSync(resolve(out, "fountain-grid-layout.json"), JSON.stringify(layout, null, 2) + "\n");
+const layoutJson = JSON.stringify(layout, null, 2) + "\n";
+writeFileSync(resolve(out, "fountain-grid-layout.json"), layoutJson);
 console.log("wrote fountain-grid-layout.json");
+
+// The skill ships the same manifest, so an agent reading the skill has the cell map.
+writeFileSync(resolve(root, "skill/handwriting-to-font/references/fountain-grid-layout.json"), layoutJson);
 
 // Skill zip (.skill is a plain zip with the skill folder at its root)
 const skillZip = resolve(out, "handwriting-to-font.skill");

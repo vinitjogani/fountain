@@ -1,24 +1,30 @@
 # Fountain
 
-An airy, watercolor-styled landing page for handwriting. Print a sheet, write your letters, take a picture,
-and let your AI agent turn your own handwriting into a real font.
+Turn your handwriting into a real font. Print a sheet, write it out with any pen,
+photograph it, and hand the photo to your AI agent.
 
 Fountain is a static landing page plus two downloadable assets:
 
-- **The Fountain sheet** (`downloads/fountain-grid-letter.pdf`, `downloads/fountain-grid-a4.pdf`):
-  two printable pages with a box for every letter, number and mark, plus ruled lines for a
-  free sentence. Also viewable at `grid/`. The cell layout is described in
+- **The printable sheet** (`downloads/fountain-grid-letter.pdf`, `downloads/fountain-grid-a4.pdf`):
+  two pages with a box for every letter, number and mark, guide lines for cap, x-height and
+  baseline, corner fiducials for perspective correction, and ruled lines for a free sentence.
+  Also viewable at `grid/`, and described machine-readably in
   `downloads/fountain-grid-layout.json`.
-- **The skill** (`downloads/handwriting-to-font.skill`): a zipped skill folder that teaches an
-  AI agent (Claude Code, or anything that reads skills) how to segment, trace, normalize,
-  space, kern and compile a TTF from photos of the sheet. Source lives in `skill/`.
+- **The Fountain skill** (`downloads/handwriting-to-font.skill`): a zipped skill folder that
+  teaches an AI agent (Claude Code, or anything that reads skills) how to segment, trace,
+  normalise, space, kern and compile a font from photos of the sheet. It carries a reference
+  describing the sheet, plus the same layout manifest. Source lives in `skill/`.
 
-The whole site is set in **Vinit Hand Natural** (`fonts/`), a font made from one handwritten
-alphabet sheet with exactly this process.
+## Typography
+
+The page is set in **Spectral** with **IBM Plex Mono** for labels, both self-hosted from
+`fonts/` so there is no third-party request at runtime. The accent voice — the wordmark,
+the specimen, the step numerals and the sample words — is **Vinit Hand Natural**, a font
+made from one handwritten alphabet sheet with exactly this process.
 
 ## Run it locally
 
-It is plain HTML, CSS and JS with no build step for the page itself:
+The page is plain HTML, CSS and JS with no build step:
 
 ```sh
 npx http-server . -p 4173 -o
@@ -30,7 +36,7 @@ The PDFs, the layout manifest and the skill zip are generated from `grid/` and `
 
 ```sh
 npm install        # playwright, for rendering the PDFs
-npm run build      # writes into downloads/
+npm run build      # writes into downloads/ and skill/.../references/
 npm run screenshots
 ```
 
@@ -48,7 +54,7 @@ manifest and the skill's `references/fountain-grid.md` all follow it.
 index.html, styles.css, main.js   the landing page
 grid/                             printable sheet (layout.js is the source of truth)
 skill/handwriting-to-font/        the skill, zipped into downloads/ by the build
-fonts/                            Vinit Hand Natural (TTF and WOFF2)
+fonts/                            Vinit Hand Natural, Spectral, IBM Plex Mono
 downloads/                        generated assets shipped with the site
 scripts/                          build and screenshot helpers
 ```

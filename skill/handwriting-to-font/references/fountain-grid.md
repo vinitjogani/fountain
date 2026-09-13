@@ -3,7 +3,8 @@
 If the handwriting sample was written on a **Fountain sheet** (printed from
 https://github.com/vinitjogani/fountain, `fountain-grid-letter.pdf` or `fountain-grid-a4.pdf`),
 the expected character sequence is already known. Use it instead of guessing from the ink.
-The exact same data is shipped as `fountain-grid-layout.json` next to the PDFs.
+The exact same data is shipped as `fountain-grid-layout.json`, both beside this file in
+`references/` and next to the PDFs on the site.
 
 ## What is on the page
 
